@@ -58,7 +58,7 @@ export default function Calculator() {
           )}
 
           <div className="space-y-2">
-            <Label htmlFor="expression">Function Expression</Label>
+            <Label htmlFor="expression" className="font-semibold">Function Expression</Label>
             <Textarea
               id="expression"
               value={expression}
