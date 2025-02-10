@@ -3,8 +3,16 @@ import { NextResponse } from "next/server"
 // Helper function to parse mathematical expressions
 function parseExpression(expr: string): string {
   return expr
+    // Handle constants first
+    .replace(/π/g, 'Math.PI')
+    .replace(/\be\b/g, 'Math.E') // \b ensures we match 'e' as a word boundary, not inside other words
     // Handle implicit multiplication with x
     .replace(/(\d)x/g, '$1*x')
+    // Handle implicit multiplication with constants
+    .replace(/(\d)π/g, '$1*Math.PI')
+    .replace(/(\d)e/g, '$1*Math.E')
+    .replace(/π(\d)/g, 'Math.PI*$1')
+    .replace(/e(\d)/g, 'Math.E*$1')
     // Handle absolute value
     .replace(/\|([^|]+)\|/g, 'Math.abs($1)')
     // Convert exponents
