@@ -1,10 +1,35 @@
 import { NextResponse } from "next/server"
 
+// Helper function to parse mathematical expressions
+function parseExpression(expr: string): string {
+  return expr
+    // Handle implicit multiplication with x
+    .replace(/(\d)x/g, '$1*x')
+    // Handle absolute value
+    .replace(/\|([^|]+)\|/g, 'Math.abs($1)')
+    // Convert exponents
+    .replace(/\^/g, '**')
+    // Handle sqrt
+    .replace(/sqrt\((.*?)\)/g, 'Math.sqrt($1)')
+    // Handle trig functions
+    .replace(/sin\((.*?)\)/g, 'Math.sin($1)')
+    .replace(/cos\((.*?)\)/g, 'Math.cos($1)')
+    .replace(/tan\((.*?)\)/g, 'Math.tan($1)')
+    // Handle log functions
+    .replace(/ln\((.*?)\)/g, 'Math.log($1)')
+    .replace(/log\((.*?)\)/g, 'Math.log10($1)')
+}
+
 // Helper function to evaluate the expression
 function evaluateExpression(expr: string, x: number): number {
-  // Replace 'x' with its value and evaluate the expression
-  const safeExpr = expr.replace(/x/g, `(${x})`).replace(/\^/g, "**")
-  return Function(`'use strict'; return (${safeExpr})`)()
+  try {
+    const parsedExpr = parseExpression(expr)
+    const safeExpr = parsedExpr.replace(/x/g, `(${x})`)
+    return Function(`'use strict'; return (${safeExpr})`)()
+  } catch (error) {
+    console.error("Error evaluating expression:", error)
+    throw new Error("Invalid mathematical expression")
+  }
 }
 
 // Helper function to calculate the derivative
@@ -124,4 +149,3 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: error.message || "Failed to calculate roots" }, { status: 500 })
   }
 }
-

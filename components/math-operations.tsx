@@ -1,6 +1,9 @@
 import { Button } from "@/components/ui/button"
 
 const operations = [
+  { label: "x", value: "x" },
+  { label: "x^2", value: "x^2" },
+  { label: "x^3", value: "x^2" },
   { label: "sin", value: "sin(" },
   { label: "cos", value: "cos(" },
   { label: "tan", value: "tan(" },

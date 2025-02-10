@@ -48,7 +48,7 @@ export default function Calculator() {
   }
 
   return (
-    <Card>
+    <Card className="md:h-full">
       <CardContent className="p-4">
         <form onSubmit={handleSubmit} className="space-y-4">
           {error && (
@@ -104,10 +104,10 @@ export default function Calculator() {
                 <SelectItem value="0.1">0.1</SelectItem>
                 <SelectItem value="0.01">0.01</SelectItem>
                 <SelectItem value="0.001">0.001</SelectItem>
-                <SelectItem value="0.0001">0.0001</SelectItem>
-                <SelectItem value="0.00001">0.00001</SelectItem>
-                <SelectItem value="0.000001">0.000001</SelectItem>
-                <SelectItem value="0.0000001">0.0000001</SelectItem>
+                <SelectItem value="0.0001">1e-4</SelectItem>
+                <SelectItem value="0.00001">1e-5</SelectItem>
+                <SelectItem value="0.000001">1e-6</SelectItem>
+                <SelectItem value="0.0000001">1e-7</SelectItem>
               </SelectContent>
             </Select>
           </div>
